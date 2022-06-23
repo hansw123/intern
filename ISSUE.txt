@@ -81,3 +81,24 @@ Failed to connect to ESP32-C2: Download mode successfully detected, but getting 
 
 
 暂时估计可能是板子坏了
+
+
+
+
+三、ESP_IDF 往高切换分支 会遇到build失败情况
+
+(首先无论如何都要重新安装 idf   ./install.sh all)
+
+build:
+报错有Git submodule components/esp_wifi/lib is out of date.  Run 'git submodule
+  update --init --recursive' to fix.
+  
+运行   git submodule update --init --recursive 解决问题
+  
+
+
+
+
+
+
+
