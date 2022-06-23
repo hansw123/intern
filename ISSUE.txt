@@ -1,0 +1,83 @@
+一、在ubuntu 18.04环境下 默认python 版本为 3.69 和2.7
+
+安装idf 的 pyhton 最低要求为3.7
+
+重新安装 python之后切换版本 发现安装idf 报缺少pip错误
+
+
+
+文档推荐 pyenv 更改版本  ----待尝试
+
+
+
+
+二、esp32 c2  烧录 失败 但是监控可以
+
+Failed to connect to ESP32-C2: Download mode successfully detected, but getting no sync reply: The serial TX path seems to be down.
+
+文档：The chip successfully resets into the download mode and sends data to the host computer, but doesn’t receive any response sent by esptool. This implies a problem with the TX line running from the host to the ESP device. Double-check your board or breadboard circuit for any problems.
+
+
+暂时估计可能是板子坏了
+
+https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/get-started/linux-macos-setup.html
+linux环境下安装idf教程
+
+1. 在第二步获取ESP-IDF中，使用命令
+git clone --recursive https://github.com/espressif/esp-idf.git
+
+循环克隆子项目，经常失败。
+
+尝试方法1：先git clone  https://github.com/espressif/esp-idf.git
+再进入esp-idf目录
+git submodule update --init --recursive 可以不用删除重新下载。
+
+尝试方法2：找别人拷贝 建议附加一个国内的下载链接。如gitee链接
+
+2. 第四步设置环境变量
+
+按照教程在.bashrc中添加
+alias get_idf='. $HOME/esp/esp-idf/export.sh'
+然后运行 source ~/.bashrc 来刷新配置文件，会报错。
+
+在kali系统下，在.zshrc 中添加，然后source不会报错且正常。
+
+3. 第六步，串口连接问题
+
+在参考 https://docs.espressif.com/projects/esp-idf/zh_CN/stable/esp32/get-started/establish-serial-connection.html
+时，第一次接触linux下串口名称，不知道串口的格式是 /dev/ttyxxx 建议加一下说明。  
+
+4. 快速入门之后，没有更进一步的教程
+
+其实example写的很好，建议添加一个介绍一个典型example的例程，不然快速入门学完之后突然到api介绍感觉很陡峭。
+
+https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/api-guides/wireshark-user-guide.html
+乐鑫 Wireshark 使用指南
+
+在 3.1 中  按照教程的命令可能会启动失败 主要是设置monitor模式可能会失败
+可以 输入 sudo airmon-ng start wlan0  尝试一下 
+
+
+
+
+一、在ubuntu 18.04环境下 默认python 版本为 3.69 和2.7
+
+安装idf 的 pyhton 最低要求为3.7
+
+重新安装 python之后切换版本 发现安装idf 报缺少pip错误
+
+
+
+文档推荐 pyenv 更改版本  ----待尝试
+
+
+
+
+二、esp32 c2  烧录 失败 但是监控可以
+
+Failed to connect to ESP32-C2: Download mode successfully detected, but getting no sync reply: The serial TX path seems to be down.
+
+文档：The chip successfully resets into the download mode and sends data to the host computer, but doesn’t receive any response sent by esptool. This implies a problem with the TX line running from the host to the ESP device. Double-check your board or breadboard circuit for any problems.
+
+
+暂时估计可能是板子坏了

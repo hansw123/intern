@@ -1,0 +1,20 @@
+wireshark 使用
+
+
+
+1. ifconfig  获取网卡名称
+
+2. sudo ifconfig 网卡名称 down
+
+3. sudo iwconfig 网卡名称 mode monitor
+
+4. sudo ifconfig 网卡名称 up
+
+5. iwconfig      //确认网卡的模式变成monitor
+
+
+
+
+6. sudo wireshark  //要sudo权限
+
+7. 选择对应的网卡开始抓包

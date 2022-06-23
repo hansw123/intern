@@ -1,0 +1,129 @@
+无线网络的安全性由 认证和加密来保证
+
+
+认证机制：认证机制用来对用户的身份进行验证，以限定特定的用户（授权的用户）可以使用网络资源。
+加密机制：加密机制用来对无线链路的数据进行加密，以保证无线网络数据只被所期望的用户接收和理解。
+
+1. 开放系统认证 open
+
+
+
+
+
+
+
+
+2.wpa/wpa2 连接过程
+
+
+第一部分 probe
+
+1. 终端 发送 探寻请求帧（probe request） 802.11b 广播形式 长帧头 速率 1Mb/s 为了尽可能的AP回应
+
+2. AP 回 probe response 802.11b 长帧头 速率 1Mb/s 单播，寻求ack回应
+
+3. sta 回 ack
+
+被动监听：AP发送信标帧包含一些信息，sta接收到会存个表
+主动监听：sta发送指定ssid 的probe request 帧 以最低速率发送，尽可能向前兼容，达到最多的AP
+
+probe request是广播， probe response是单播要确认
+
+
+
+第二部分 身份认证（开放系统）
+
+只是简单的交换帧来确认 sta能满足bss要求的最低需求，sta通过beacon帧来确认 bss compatibility
+比较自己是否满足
+
+
+1. sta 发送 Deauthentication 802.11b 1Mb/s   //通知帧应该不用回ack
+可以看到 reason code 
+
+2. AP 回ack 802.11b 长帧头 速率 1Mb/s //没有源地址
+
+3. sta发送 Authentication request  802.11b 1Mb/s
+ 
+4. AP 回ack
+
+5. AP回 Authentication  response
+
+6. sta回ack 
+
+观察 Authentication  response status code 可以看到 successful
+
+
+
+第三部分 关联
+
+1. sta 发送 Association Request  802.11b 1Mb/s
+
+2. AP 回ack
+
+3. AP回 Association Response 802.11g  6Mb/s
+
+4. sta回ack
+
+‎sta先发送一个关联请求，包括其具有的与信标中列出的功能相匹配的所有功能。
+通过这种方式，AP选择最好地与sta进行通信的方式 Association Response选择了802.11g 6Mb/s
+都是单播帧，，期待ack确认
+‎关联成功 会给sta 一个 AID 
+
+第四部分 802.1x/EAP Exchange
+
+在交换期间，sta 和 AP 生成成对主密钥（PMK），稍后在四向握手期间使用该密钥来派生成对瞬态密钥 （PTK）。交换成功后，客户端现在具有与 AP 的成对主密钥安全关联 （PMKSA）。AP为该电台提供了一个 PMKID，该 PMKID 对于该电台是唯一的。
+
+四次握手
+
+1. AP 发送 key  data  802.11n 带宽 40MHz 135Mb/s 802.1x -2004 replay counter 1   message number 1
+
+2. sta回ack
+
+3. sta 回 key  150Mb/s replay counter 1 message number 2
+
+4. ap 回ack
+
+5. AP 发送key 135Mb/s replay counter 2 message number 3
+
+6. sta回ack
+
+7. sta 回key 150Mb/s replay counter 2 message number 4
+
+8. AP 回ack
+
+message 1：
+‎
+sta会在后台生成一个名为 SNonce（supplicant nonce‎‎）的随机数。
+AP 生成一个称为 ‎‎ANonce‎‎（supplicant nonce）的随机数，将其放入 EAPOL 密钥帧中，然后将其发送到sta。sta使用 PMK（派生自 PSK 或 EAP 方法）、ANonce、SNonce 和 MAC 地址来生成用于加密单播流量的 PTK。‎
+
+message 2：
+
+‎sta将 ‎‎SNonce‎‎ 通过 EAPOL-Key 帧 发送到 AP。AP 现在具有用于生成相同 PTK 以加密单播流量的所有相同信息。sta还发送‎‎一个消息完整性代码（MIC）‎‎以及‎‎RSN信息元素‎‎，以展示其功能
+WPA WPA2 WPA3
+
+KRACK 论文
+
+
+message 3：
+
+AP发送Anonce ，RSN information element mic 通过EAPOL帧
+AP用GMK产生 GTK，同时将GTK 发送给sta 
+Install 置 1，通知sta使用ptk 加密信息
+
+message 4：
+
+sta回AP 一个确认和MIC 
+
+
+
+
+sta 获取ip地址 dhcp 
+
+ip 层
+
+
+
+//待做 纯open认证 模式
+ WEP 
+
+
