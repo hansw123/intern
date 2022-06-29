@@ -6,7 +6,56 @@
 
 1. 开放系统认证 open
 
+. 终端 发送 探寻请求帧（probe request） 802.11b 广播形式 长帧头 速率 1Mb/s 为了尽可能的AP回应
 
+2. AP 回 probe response 802.11b 长帧头 速率 1Mb/s 单播，寻求ack回应
+
+3. sta 回 ack
+
+被动监听：AP发送信标帧包含一些信息，sta接收到会存个表
+主动监听：sta发送指定ssid 的probe request 帧 以最低速率发送，尽可能向前兼容，达到最多的AP
+
+probe request是广播， probe response是单播要确认
+
+
+
+第二部分 身份认证（开放系统）
+
+只是简单的交换帧来确认 sta能满足bss要求的最低需求，sta通过beacon帧来确认 bss compatibility
+比较自己是否满足
+
+
+1. sta 发送 Deauthentication 802.11b 1Mb/s   //通知帧应该不用回ack
+可以看到 reason code 
+
+2. AP 回ack 802.11b 长帧头 速率 1Mb/s //没有源地址
+
+3. sta发送 Authentication request  802.11b 1Mb/s
+ 
+4. AP 回ack
+
+5. AP回 Authentication  response
+
+6. sta回ack 
+
+观察 Authentication  response status code 可以看到 successful
+
+
+
+第三部分 关联
+
+1. sta 发送 Association Request  802.11b 1Mb/s
+
+2. AP 回ack
+
+3. AP回 Association Response 802.11g  6Mb/s
+
+4. sta回ack
+
+‎sta先发送一个关联请求，包括其具有的与信标中列出的功能相匹配的所有功能。
+通过这种方式，AP选择最好地与sta进行通信的方式 Association Response选择了802.11g 6Mb/s
+都是单播帧，，期待ack确认
+‎关联成功 会给sta 一个 AID 
 
 
 
